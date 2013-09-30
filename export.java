@@ -13,7 +13,7 @@ public class export {
 			}
 			Command command = Command.splunk("info").parse(args);
 	        Service service = Service.connect(command.opts);
-	        InputStream response = //LAB: call export and pass the query in args[0]
+	        InputStream response = service.export(args[0]);//LAB: call export and pass the query in args[0]
 
 	        int chr = 0;
 			while (chr != -1) System.out.write(chr = response.read());

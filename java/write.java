@@ -19,9 +19,12 @@ public class write {
 
 	        Args params = new Args();
 	        	//LAB: add name/value pairs for sourcetype, source, and host, setting any static value for each as desired
+	        params.add("sourcetype","zugji");
+                params.add("host","localhost");
 	        
-	        Index index = //LAB: get the index named in args[0]
+	        Index index = service.getIndexes().get(args[0]);//LAB: get the index named in args[0]
 	        //LAB: submit the data in args[1] to the index, passing the params, and add a date/time stamp to the beginning of the data
+	        index.submit(params, new Date() + " : " + args[1]);
 		} 
     	catch (Exception e)  {
     		if(e.getMessage() != null) {

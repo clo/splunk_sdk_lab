@@ -1,0 +1,23 @@
+Authentication
+==============
+curl -k https://localhost:xxxx/services/auth/login -d username=restclient -d password=xxxxxx
+
+	<response>
+		<sessionKey>4a1e793bdcab3a8654c4ace1aa771b03</sessionKey>
+	</response>
+
+Getting list of all users
+=========================
+curl -k -H"Authorization: Splunk 4a1e793bdcab3a8654c4ace1aa771b03" https://localhost:xxxx/services/authentication/users
+
+Getting user restclient 
+==================
+curl -k -H"Authorization: Splunk 4a1e793bdcab3a8654c4ace1aa771b03" https://localhost:xxxx/services/authentication/users/restclient
+
+API Doc for saved searches:
+==========================
+http://docs.splunk.com/Documentation/Splunk/latest/RESTAPI/RESTsearch#saved.2Fsearches
+
+List of all saved searches:
+==========================
+curl -k -H"Authorization: Splunk 4a1e793bdcab3a8654c4ace1aa771b03" https://localhost:9621/services/saved/searches

@@ -14,23 +14,25 @@ public class monitor {
 	        Service service = Service.connect(command.opts);
 	        
 	        JobArgs ja = new JobArgs();
-	    	//LAB: add name/value pair to ja for auto cancel set to 5 minutes 
+	    	ja.put("auto_cancel", 300);
 	        if(args.length == 2 && args[1].equalsIgnoreCase("rt")) { 
-    	        //LAB: add name/value pairs to ja for realtime search
+    	        ja.put("earliest_time", "rt");
+    	    	ja.put("latest_time", "rt");
+    	    	System.out.println("rt");
 	        }
 	        
-			job = //LAB: create a search job using the query in args[0] and ja
+			job = service.getJobs().create(args[0], ja);
 
 			int offset = 0;
 			Event event;
 			
 			while (true) {
-				int total = //LAB: get the total number of events in job so far
+				int total = job.getEventCount();
 				if (total > offset) {
-					Args outputArgs = new Args();
-					//LAB: add name/value pairs outputArgs for offset=offset and count=total 
-					InputStream resultSet = //LAB: get the job's events, passing outputArgs
-					ResultsReaderXml events = //LAB: convert resultSet to a ResultsReaderXML
+					Args outputArgs = new Args("count", total);
+					outputArgs.put("offset", offset);
+					InputStream resultSet = job.getEvents(outputArgs);
+					ResultsReaderXml events = new ResultsReaderXml(resultSet);
 					while ((event = events.getNextEvent()) != null) 
 						System.out.println(event.get("_raw"));
 					offset = total;

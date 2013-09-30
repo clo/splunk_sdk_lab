@@ -16,17 +16,25 @@ public class savedsearches {
 			SavedSearchCollectionArgs ssca = new SavedSearchCollectionArgs();
 			if(args.length == 1) {
 				//LAB: add wildcards for owner and app to ssca, and set search = args[0]
-				SavedSearchCollection ssc = //LAB: get all saved searches matching sscaservice.getSavedSearches(ssca);
+                                ssca.setOwner("-");
+                                ssca.setApp("-");
+                                ssca.setSearch(args[0]);
+				SavedSearchCollection ssc = service.getSavedSearches(ssca);//LAB: get all saved searches matching sscaservice.getSavedSearches(ssca);
 				if(!ssc.containsKey(args[0])) {
 					throw new Exception("No such saved search: " + args[0]);
 				}
 				SavedSearch ss = ssc.get(args[0]);
 				System.out.println("Getting info for " + ss.getName());
 		        //LAB: print all attributes of ss to STDOUT
+                                for (String key : ss.keySet()) {
+                                  System.out.println("    " + key + ": " + ss.get(key));
+                                }
 			}
 			if(args[0].equalsIgnoreCase("list")) {
 				//LAB: add name/value pairs to ssca for owner (from args[1] and app [from args[2]
-				SavedSearchCollection ssc = //LAB: get all saved searches matching ssca 
+				ssca.setOwner(args[1]);
+                                ssca.setApp(args[2]);
+				SavedSearchCollection ssc = service.getSavedSearches(ssca);//LAB: get all saved searches matching ssca 
 				System.out.println("List of Saved Searches for context: " + args[1] + "/" + args[2] + ":");
 				for (SavedSearch s: ssc.values()) {
 					System.out.println(s.getName() + " (" + s.getMetadata().getOwner() + "/" + s.getMetadata().getApp() + ")"); 
